@@ -10,7 +10,7 @@ const NewGrub = props => {
 
     if (enteredText.length > 0) {
       const sendReq = async () => {
-        const response = await fetch(`http://localhost:5000/api/grub/${enteredText}`);
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/grub/${enteredText}`);
         const responseData = await response.json();
         const randomIdx = Math.floor(Math.random() * Math.floor(responseData.total));
         const grub = responseData.businesses[randomIdx];
