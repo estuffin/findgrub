@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './NewGrub.css';
 
@@ -8,14 +8,21 @@ const NewGrub = props => {
   const addGrubHandler = event => {
     event.preventDefault();
 
-    const newGrub = {
-      id: Math.random().toString(),
-      text: enteredText
-    };
-
-    setEnteredText('');
-
-    props.onAddGrub(newGrub);
+    if (enteredText.length > 0) {
+      const sendReq = async () => {
+        const response = await fetch(`http://localhost:5000/api/grub/${enteredText}`);
+        const responseData = await response.json();
+        const randomIdx = Math.floor(Math.random() * Math.floor(responseData.total));
+        const grub = responseData.businesses[randomIdx];
+        const newGrub = {
+          id: grub.id,
+          text: grub.name
+        };
+    
+        props.onAddGrub(newGrub);
+      };
+      sendReq();
+    }
   };
 
   const textChangeHandler = event => {

@@ -9,9 +9,11 @@ function App() {
 
   const addNewGrubHandler = newGrub => {
     // setGrub(grub.concat(newGrub));
-    if (newGrub.text.length > 0) {
-      setGrub(prevGrub => prevGrub.concat(newGrub));
-    }
+    setGrub(prevGrub => {
+      prevGrub.unshift(newGrub);
+      const newList = [...prevGrub];
+      return newList;
+    });
   };
 
   return (
@@ -19,7 +21,7 @@ function App() {
       <header className="App-header">
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <div className="grub-suggs">
-          <h2>Suggestions</h2>
+          <h2>Find Grub</h2>
           <NewGrub onAddGrub={addNewGrubHandler} />
           <GrubList grubs={grub} />
         </div>
