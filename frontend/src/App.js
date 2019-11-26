@@ -10,6 +10,10 @@ function App() {
   const addNewGrubHandler = newGrub => {
     // setGrub(grub.concat(newGrub));
     setGrub(prevGrub => {
+      const existingGrubIdx = prevGrub.findIndex(d => d.id === newGrub.id);
+      if (existingGrubIdx !== -1) {
+        prevGrub.splice(existingGrubIdx, 1);
+      }
       prevGrub.unshift(newGrub);
       const newList = [...prevGrub];
       return newList;
